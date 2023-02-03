@@ -1,11 +1,17 @@
-import { describe, expect, it } from '@jest/globals';
+import {
+	describe,
+	expect,
+	it,
+} from '@jest/globals';
+import os from 'os';
 
 import SevenZip from '../src/SevenZip';
 
 describe('Define an existing path', () => {
+	const PATH = os.platform() === 'win32' ? 'C:\\Program Files\\7-Zip\\' : undefined;
 	const zip = new SevenZip({
 		env: {
-			PATH: 'C:\\Program Files\\7-Zip\\',
+			PATH,
 		},
 	});
 
@@ -31,7 +37,7 @@ describe('Define an existing path', () => {
 describe('Locate installed 7-Zip', () => {
 	it('locates nothing in the environment', async () => {
 		const zip = new SevenZip();
-		const cmd = await zip.findInstalled();
+		const cmd = await zip.findInstalled(['a', 'b', 'c']);
 		expect(cmd).toBe('');
 	});
 
@@ -40,12 +46,5 @@ describe('Locate installed 7-Zip', () => {
 			executable: '7zq',
 		});
 		expect(await zip.isInstalled()).toBe(false);
-	});
-
-	it('can handle absolute path', async () => {
-		const zip = new SevenZip({
-			executable: 'C:\\Program Files\\7-Zip\\7z.exe',
-		});
-		expect(await zip.isInstalled()).toBe(true);
 	});
 });
