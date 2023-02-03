@@ -31,6 +31,11 @@ module.exports = {
 			'tab',
 		],
 		'linebreak-style': 'off',
+		'no-await-in-loop': 'off',
+		'no-restricted-syntax': [
+			'error',
+			'WithStatement',
+		],
 		'no-shadow': 'off',
 		'no-tabs': 'off',
 	},
