@@ -3,17 +3,11 @@ import {
 	expect,
 	it,
 } from '@jest/globals';
-import os from 'os';
 
 import SevenZip from '../src/SevenZip';
 
 describe('Define an existing path', () => {
-	const PATH = os.platform() === 'win32' ? 'C:\\Program Files\\7-Zip\\' : undefined;
-	const zip = new SevenZip({
-		env: {
-			PATH,
-		},
-	});
+	const zip = new SevenZip();
 
 	it('cannot be used before an executable is found', async () => {
 		expect(await zip.isInstalled()).toBe(false);
