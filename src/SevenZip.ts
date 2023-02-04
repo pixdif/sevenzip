@@ -1,16 +1,11 @@
 import cp from 'child_process';
 
-function spawn(cmd: string, args?: string[], options?: cp.SpawnOptionsWithoutStdio): Promise<void> {
-	const child = cp.spawn(cmd, args, options);
-	return new Promise((resolve, reject) => {
-		child.once('error', reject);
-		child.once('close', resolve);
-	});
-}
+import join from './util/join';
 
 async function commandExists(cmd: string, options?: cp.SpawnOptionsWithoutStdio): Promise<boolean> {
 	try {
-		await spawn(cmd, undefined, options);
+		const child = cp.spawn(cmd, options);
+		await join(child);
 		return true;
 	} catch (error) {
 		return false;

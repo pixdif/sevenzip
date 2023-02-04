@@ -5,6 +5,7 @@ import {
 } from '@jest/globals';
 
 import SevenZip from '../src/SevenZip';
+import join from '../src/util/join';
 
 describe('Define an existing path', () => {
 	const zip = new SevenZip();
@@ -19,12 +20,9 @@ describe('Define an existing path', () => {
 		expect(await zip.isInstalled()).toBe(true);
 	});
 
-	it('shows supported formats', () => {
+	it('shows supported formats', async () => {
 		const child = zip.exec('i');
-		return new Promise((resolve, reject) => {
-			child.once('close', resolve);
-			child.once('error', reject);
-		});
+		await join(child);
 	});
 });
 
