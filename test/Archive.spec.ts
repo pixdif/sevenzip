@@ -7,6 +7,7 @@ import {
 } from '@jest/globals';
 import fs from 'fs';
 import fsp from 'fs/promises';
+import path from 'path';
 import rimraf from 'rimraf';
 
 import Archive from '../src/Archive';
@@ -19,10 +20,9 @@ beforeAll(async () => {
 });
 
 const zip = new SevenZip({ executable: '7z' });
+const sample = new Archive(zip, 'tmp/sample.7z');
 
 describe('Compress a file', () => {
-	const sample = new Archive(zip, 'tmp/sample.7z');
-
 	it('creates a new zip file', async () => {
 		await sample.add('test/SevenZip.spec.ts', 'test/Archive.spec.ts');
 	});
@@ -32,9 +32,31 @@ describe('Compress a file', () => {
 	});
 });
 
-describe('Extracts all files', () => {
-	const sample = new Archive(zip, 'tmp/sample.7z');
+describe('List files', () => {
+	it('has 2 files', async () => {
+		const reader = sample.listFiles();
+		const files = await reader.list();
+		const [file1, file2] = files;
+		expect(file1.path).toBe(path.join('test', 'Archive.spec.ts'));
+		expect(file2.path).toContain(path.join('test', 'SevenZip.spec.ts'));
+		for (const file of files) {
+			expect(file.size).not.toBeNaN();
+			expect(file.modified.getTime()).not.toBeNaN();
+			expect(file.method).toBe('LZMA2:12');
+		}
+	});
 
+	it('closes reader earlier', async () => {
+		const reader = sample.listFiles();
+		const [files] = await Promise.all([
+			reader.list(),
+			reader.close(),
+		]);
+		expect(files).toHaveLength(0);
+	});
+});
+
+describe('Extracts all files', () => {
 	afterEach(async () => {
 		await rimraf('tmp/test');
 	});
