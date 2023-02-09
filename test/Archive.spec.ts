@@ -3,7 +3,6 @@ import {
 	it,
 	expect,
 	beforeAll,
-	afterEach,
 } from '@jest/globals';
 import fs from 'fs';
 import fsp from 'fs/promises';
@@ -14,9 +13,10 @@ import Archive from '../src/Archive';
 import SevenZip from '../src/SevenZip';
 
 beforeAll(async () => {
-	if (!fs.existsSync('tmp')) {
-		await fsp.mkdir('tmp');
+	if (fs.existsSync('tmp')) {
+		await rimraf('tmp');
 	}
+	await fsp.mkdir('tmp', { recursive: true });
 });
 
 const zip = new SevenZip({ executable: '7z' });
@@ -57,21 +57,23 @@ describe('List files', () => {
 });
 
 describe('Extracts all files', () => {
-	afterEach(async () => {
-		await rimraf('tmp/test');
-	});
-
 	it('extracts all files to a directory', async () => {
-		await sample.extractAll('tmp');
-		expect(fs.existsSync('tmp/test/SevenZip.spec.ts')).toBe(true);
-		expect(fs.existsSync('tmp/test/Archive.spec.ts')).toBe(true);
+		await sample.extract({
+			outputDir: 'tmp',
+			ignoresDirs: true,
+		});
+		expect(fs.existsSync('tmp/SevenZip.spec.ts')).toBe(true);
+		expect(fs.existsSync('tmp/Archive.spec.ts')).toBe(true);
+		await fsp.unlink('tmp/SevenZip.spec.ts');
+		await fsp.unlink('tmp/Archive.spec.ts');
 	});
 
 	it('extracts all files', async () => {
 		const tmpZip = new SevenZip({ executable: '7z', cwd: 'tmp' });
 		const archive = new Archive(tmpZip, 'sample.7z');
-		await archive.extractAll();
+		await archive.extract();
 		expect(fs.existsSync('tmp/test/SevenZip.spec.ts')).toBe(true);
 		expect(fs.existsSync('tmp/test/Archive.spec.ts')).toBe(true);
+		await rimraf('tmp/test');
 	});
 });

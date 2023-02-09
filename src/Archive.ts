@@ -1,8 +1,12 @@
 import rl from 'readline';
+
+import type SevenZip from './SevenZip';
+
 import ArchiveFileList from './emitter/ArchiveFileList';
 
 import Command from './model/Command';
-import type SevenZip from './SevenZip';
+import ExtractOptions from './model/ExtractOptions';
+
 import join from './util/join';
 
 export class Archive {
@@ -35,11 +39,18 @@ export class Archive {
 	}
 
 	/**
-	 * Extract all files.
-	 * @param destination destination folder
+	 * Extract files.
+	 * @param options extra options
 	 */
-	async extractAll(destination?: string): Promise<void> {
-		const child = destination ? this.zip.exec(Command.Extract, `-o${destination}`, this.location) : this.zip.exec(Command.Extract, this.location);
+	async extract(options?: ExtractOptions): Promise<void> {
+		const cmd = options?.ignoresDirs ? Command.ExtractAndFlatten : Command.Extract;
+		const args: string[] = [];
+		const outputDir = options?.outputDir;
+		if (outputDir) {
+			args.push(`-o${outputDir}`);
+		}
+		args.push(this.location);
+		const child = this.zip.exec(cmd, ...args);
 		await join(child);
 	}
 }
