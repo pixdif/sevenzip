@@ -1,6 +1,6 @@
 {
   "name": "@pixdif/sevenzip",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Use your 7-Zip at ease",
   "main": "dist",
   "scripts": {
@@ -34,5 +34,8 @@
     "rimraf": "^4.1.2",
     "ts-jest": "^29.0.5",
     "typescript": "^4.9.5"
-  }
+  },
+  "files": [
+    "dist"
+  ]
 }
