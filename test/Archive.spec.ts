@@ -7,7 +7,7 @@ import {
 import fs from 'fs';
 import fsp from 'fs/promises';
 import path from 'path';
-import rimraf from 'rimraf';
+import { rimraf } from 'rimraf';
 
 import Archive from '../src/Archive';
 import SevenZip from '../src/SevenZip';
