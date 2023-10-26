@@ -3,7 +3,7 @@ import { EventEmitter } from 'events';
 
 import ArchiveFile from '../model/ArchiveFile';
 
-interface ArchiveFileListEvents extends EventEmitter {
+export interface ArchiveFileList {
 	on(event: 'file', listener: (file: ArchiveFile) => void): this;
 
 	once(event: 'file', listener: (file: ArchiveFile) => void): this;
@@ -13,7 +13,7 @@ interface ArchiveFileListEvents extends EventEmitter {
 	emit(event: 'file', file: ArchiveFile): boolean;
 }
 
-export class ArchiveFileList extends EventEmitter implements ArchiveFileListEvents {
+export class ArchiveFileList extends EventEmitter {
 	protected reader: rl.Interface;
 
 	protected buffer: Record<string, string> = {};

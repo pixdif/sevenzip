@@ -6,11 +6,13 @@ module.exports = {
 	extends: [
 		'airbnb-base',
 		'plugin:@typescript-eslint/recommended',
+		'plugin:@typescript-eslint/recommended-requiring-type-checking',
 	],
 	parser: '@typescript-eslint/parser',
 	parserOptions: {
 		ecmaVersion: 'latest',
 		sourceType: 'module',
+		project: 'tsconfig.lint.json',
 	},
 	plugins: [
 		'@typescript-eslint',
@@ -38,6 +40,7 @@ module.exports = {
 		],
 		'no-shadow': 'off',
 		'no-tabs': 'off',
+		'@typescript-eslint/no-unsafe-declaration-merging': 'off',
 	},
 	settings: {
 		'import/resolver': {
