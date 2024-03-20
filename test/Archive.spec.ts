@@ -34,7 +34,7 @@ describe('Compress a file', () => {
 
 describe('List files', () => {
 	it('has 2 files', async () => {
-		const reader = sample.listFiles();
+		const reader = await sample.listFiles();
 		const files = await reader.list();
 		const [file1, file2] = files;
 		expect(file1.path).toBe(path.join('test', 'Archive.spec.ts'));
@@ -47,7 +47,7 @@ describe('List files', () => {
 	});
 
 	it('closes reader earlier', async () => {
-		const reader = sample.listFiles();
+		const reader = await sample.listFiles();
 		const [files] = await Promise.all([
 			reader.list(),
 			reader.close(),

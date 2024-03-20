@@ -29,8 +29,11 @@ export class SevenZip {
 	 * @param options launch options
 	 */
 	constructor(options?: Partial<LaunchOptions>) {
-		this.executable = options?.executable;
-		this.options = options;
+		if (options) {
+			const { executable, ...others } = options;
+			this.executable = executable;
+			this.options = others;
+		}
 	}
 
 	/**
@@ -65,9 +68,21 @@ export class SevenZip {
 
 	/**
 	 * Execute with optional arguments.
+	 * If the executable isn't set yet, it tries to find an executable first.
 	 * @param args command-line arguments
 	 */
-	exec(...args: string[]): cp.ChildProcessWithoutNullStreams {
+	async exec(...args: string[]): Promise<cp.ChildProcessWithoutNullStreams> {
+		if (!this.executable) {
+			await this.findInstalled();
+		}
+		return this.spawn(...args);
+	}
+
+	/**
+	 * Spawn a child process with optional arguments.
+	 * @param args command-line arguments
+	 */
+	spawn(...args: string[]): cp.ChildProcessWithoutNullStreams {
 		if (!this.executable) {
 			throw new Error('No executable of 7-Zip is found.');
 		}

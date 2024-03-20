@@ -12,7 +12,7 @@ describe('Define an existing path', () => {
 
 	it('cannot be used before an executable is found', async () => {
 		expect(await zip.isInstalled()).toBe(false);
-		expect(() => zip.exec('i')).toThrowError('No executable of 7-Zip is found.');
+		expect(() => zip.spawn('i')).toThrowError('No executable of 7-Zip is found.');
 	});
 
 	it('can find the installed 7-Zip', async () => {
@@ -22,12 +22,18 @@ describe('Define an existing path', () => {
 	});
 
 	it('shows supported formats', async () => {
-		const child = zip.exec('i');
+		const child = zip.spawn('i');
 		await join(child);
 	});
 });
 
 describe('Locate installed 7-Zip', () => {
+	it('tries multiple executables by default', async () => {
+		const zip = new SevenZip();
+		const child = await zip.exec('i');
+		await join(child);
+	});
+
 	it('locates nothing in the environment', async () => {
 		const zip = new SevenZip();
 		await zip.findInstalled(['a', 'b', 'c']);
