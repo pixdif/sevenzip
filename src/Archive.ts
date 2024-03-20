@@ -1,6 +1,6 @@
 import rl from 'readline';
 
-import type SevenZip from './SevenZip';
+import SevenZip from './SevenZip';
 
 import ArchiveFileList from './emitter/ArchiveFileList';
 
@@ -14,7 +14,7 @@ export class Archive {
 
 	protected location: string;
 
-	constructor(zip: SevenZip, location: string) {
+	constructor(location: string, zip = new SevenZip()) {
 		this.zip = zip;
 		this.location = location;
 	}

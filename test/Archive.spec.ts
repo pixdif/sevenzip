@@ -19,8 +19,7 @@ beforeAll(async () => {
 	await fsp.mkdir('tmp', { recursive: true });
 });
 
-const zip = new SevenZip({ executable: '7z' });
-const sample = new Archive(zip, 'tmp/sample.7z');
+const sample = new Archive('tmp/sample.7z');
 
 describe('Compress a file', () => {
 	it('creates a new zip file', async () => {
@@ -70,7 +69,7 @@ describe('Extracts all files', () => {
 
 	it('extracts all files', async () => {
 		const tmpZip = new SevenZip({ executable: '7z', cwd: 'tmp' });
-		const archive = new Archive(tmpZip, 'sample.7z');
+		const archive = new Archive('sample.7z', tmpZip);
 		await archive.extract();
 		expect(fs.existsSync('tmp/test/SevenZip.spec.ts')).toBe(true);
 		expect(fs.existsSync('tmp/test/Archive.spec.ts')).toBe(true);
