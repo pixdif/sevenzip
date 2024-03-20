@@ -21,24 +21,23 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 ## Get Started
 
-### Find installed 7-Zip
-```TypeScript
-import { SevenZip } from '@pixdif/sevenzip';
-
-const zip = new SevenZip();
-await zip.findInstalled();
-```
-
 ### Compress and extract files
 ```TypeScript
-import { SevenZip, Archive } from '@pixdif/sevenzip';
+import { Archive } from '@pixdif/sevenzip';
 
-const zip = new SevenZip({ executable: '7z' });
-const example = new Archive(zip, 'my-archive.7z');
+const example = new Archive('my-archive.7z');
 await example.add('file1.txt', 'file2.txt');
 
 await example.extract({
 	outputDir: 'my-archive',
 	ignoreDirs: true,
 });
+```
+
+### Find installed 7-Zip
+```TypeScript
+import { SevenZip } from '@pixdif/sevenzip';
+
+const zip = new SevenZip();
+await zip.findInstalled();
 ```
