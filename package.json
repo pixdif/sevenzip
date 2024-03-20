@@ -1,6 +1,6 @@
 {
   "name": "@pixdif/sevenzip",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Use your 7-Zip at ease",
   "main": "dist",
   "scripts": {
