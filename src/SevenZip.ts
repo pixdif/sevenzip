@@ -34,19 +34,23 @@ export class SevenZip {
 	}
 
 	/**
+	 * @returns Executable of 7-Zip.
+	 */
+	getExecutable(): string | undefined {
+		return this.executable;
+	}
+
+	/**
 	 * Find an installed 7-Zip in the environment.
 	 * It looks for 7z, 7zz and 7za by default.
 	 * @param executables executable candidates
-	 * @returns command to run 7-Zip
 	 */
-	async findInstalled(executables = ['7z', '7zz', '7za']): Promise<string> {
+	async findInstalled(executables = ['7z', '7zz', '7za']): Promise<void> {
 		for (const sevenZip of executables) {
 			if (await commandExists(sevenZip, this.options)) {
 				this.executable = sevenZip;
-				return sevenZip;
 			}
 		}
-		return '';
 	}
 
 	/**

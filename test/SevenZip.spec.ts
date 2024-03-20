@@ -16,7 +16,8 @@ describe('Define an existing path', () => {
 	});
 
 	it('can find the installed 7-Zip', async () => {
-		expect(await zip.findInstalled()).toBe('7z');
+		await zip.findInstalled();
+		expect(zip.getExecutable()).not.toBeUndefined();
 		expect(await zip.isInstalled()).toBe(true);
 	});
 
@@ -29,8 +30,8 @@ describe('Define an existing path', () => {
 describe('Locate installed 7-Zip', () => {
 	it('locates nothing in the environment', async () => {
 		const zip = new SevenZip();
-		const cmd = await zip.findInstalled(['a', 'b', 'c']);
-		expect(cmd).toBe('');
+		await zip.findInstalled(['a', 'b', 'c']);
+		expect(zip.getExecutable()).toBeUndefined();
 	});
 
 	it('cannot find non-existing command', async () => {
