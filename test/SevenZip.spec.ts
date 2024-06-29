@@ -4,8 +4,8 @@ import {
 	it,
 } from '@jest/globals';
 
-import SevenZip from '../src/SevenZip';
-import join from '../src/util/join';
+import SevenZip from '../src/SevenZip.js';
+import join from '../src/util/join.js';
 
 describe('Define an existing path', () => {
 	const zip = new SevenZip();

@@ -1,3 +1,3 @@
-export * from './ArchiveFile';
-export * from './Command';
-export * from './ExtractOptions';
+export * from './ArchiveFile.js';
+export * from './Command.js';
+export * from './ExtractOptions.js';

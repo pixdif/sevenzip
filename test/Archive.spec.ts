@@ -7,14 +7,13 @@ import {
 import fs from 'fs';
 import fsp from 'fs/promises';
 import path from 'path';
-import { rimraf } from 'rimraf';
 
-import Archive from '../src/Archive';
-import SevenZip from '../src/SevenZip';
+import Archive from '../src/Archive.js';
+import SevenZip from '../src/SevenZip.js';
 
 beforeAll(async () => {
 	if (fs.existsSync('tmp')) {
-		await rimraf('tmp');
+		await fsp.rm('tmp', { recursive: true, force: true });
 	}
 	await fsp.mkdir('tmp', { recursive: true });
 });
@@ -73,6 +72,6 @@ describe('Extracts all files', () => {
 		await archive.extract();
 		expect(fs.existsSync('tmp/test/SevenZip.spec.ts')).toBe(true);
 		expect(fs.existsSync('tmp/test/Archive.spec.ts')).toBe(true);
-		await rimraf('tmp/test');
+		await fsp.rm('tmp/test', { recursive: true, force: true });
 	});
 });

@@ -1,7 +1,7 @@
 import rl from 'readline';
 import { EventEmitter } from 'events';
 
-import ArchiveFile from '../model/ArchiveFile';
+import ArchiveFile from '../model/ArchiveFile.js';
 
 export interface ArchiveFileList {
 	on(event: 'file', listener: (file: ArchiveFile) => void): this;

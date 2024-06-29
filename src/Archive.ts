@@ -1,13 +1,13 @@
 import rl from 'readline';
 
-import SevenZip from './SevenZip';
+import SevenZip from './SevenZip.js';
 
-import ArchiveFileList from './emitter/ArchiveFileList';
+import ArchiveFileList from './emitter/ArchiveFileList.js';
 
-import Command from './model/Command';
-import ExtractOptions from './model/ExtractOptions';
+import Command from './model/Command.js';
+import ExtractOptions from './model/ExtractOptions.js';
 
-import join from './util/join';
+import join from './util/join.js';
 
 export class Archive {
 	readonly zip: SevenZip;

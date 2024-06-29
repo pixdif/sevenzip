@@ -1,3 +1,3 @@
-export * from './model';
-export * from './Archive';
-export * from './SevenZip';
+export * from './model/index.js';
+export * from './Archive.js';
+export * from './SevenZip.js';

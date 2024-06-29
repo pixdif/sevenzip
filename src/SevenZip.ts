@@ -1,6 +1,6 @@
 import cp from 'child_process';
 
-import join from './util/join';
+import join from './util/join.js';
 
 async function commandExists(cmd: string, options?: cp.SpawnOptionsWithoutStdio): Promise<boolean> {
 	try {

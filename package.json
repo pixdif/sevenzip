@@ -2,12 +2,14 @@
   "name": "@pixdif/sevenzip",
   "version": "0.3.0",
   "description": "Use your 7-Zip at ease",
+  "type": "module",
   "main": "dist",
   "scripts": {
-    "build": "tsc",
-    "debug": "tsc --incremental --sourceMap",
-    "test": "npm run lint && jest",
-    "lint": "eslint --ext=ts,js ."
+    "build": "tsc -p src",
+    "debug": "tsc -p src --incremental --sourceMap",
+    "test": "npm run lint && npm run jest",
+    "lint": "eslint --ext=ts,js .",
+    "jest": "cross-env NODE_OPTIONS=--experimental-vm-modules jest --coverage"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^7.3.1",
     "@typescript-eslint/parser": "^7.3.1",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-import-resolver-typescript": "^3.6.1",
